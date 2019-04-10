@@ -1,0 +1,137 @@
+package mysql;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTextArea;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+import javax.swing.JLabel;
+import java.awt.Font;
+
+public class View extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					View frame = new View();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public View(String p) {
+		
+		int a;
+		
+		if(p.equals("Saem"))
+			a=1;
+		else if(p.equals("Bala"))
+			a=2;
+		else
+			a=3;
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 783, 578);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(205, 133, 63));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(12, 75, 626, 91);
+		contentPane.add(textArea);
+		
+		JTextArea textArea_1 = new JTextArea();
+		textArea_1.setBounds(12, 195, 741, 275);
+		contentPane.add(textArea_1);
+		
+		JButton btnNewButton = new JButton("Load");
+		btnNewButton.setBackground(SystemColor.activeCaptionBorder);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/data1","root","");
+					Statement stmt=con.createStatement();
+					String sql2;
+					if(a==1)
+				    sql2="Select problem from massign where temp=1";
+					else if(a==2)
+				    sql2="Select problem from massign where temp=2";
+					else
+				    sql2="Select problem from massign where temp=3";
+					ResultSet rs2=stmt.executeQuery(sql2);
+					while(rs2.next())
+					{
+						String p2=rs2.getString("problem");
+						textArea.setText(p2);
+					}
+					con.close();
+				}catch(Exception e) {System.out.print(e);}
+			}
+		});
+		btnNewButton.setBounds(650, 75, 97, 91);
+		contentPane.add(btnNewButton);
+		
+		JButton btnLoad = new JButton("Load");
+		btnLoad.setBackground(SystemColor.activeCaptionBorder);
+		btnLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/data1","root","");
+					Statement stmt=con.createStatement();
+					String sql;
+					if(a==1)
+				    sql="Select empcode from scode where temp=1";
+					else if(a==2)
+					sql="Select empcode from scode where temp=2";
+					else
+					sql="Select empcode from scode where temp=3";
+					ResultSet rs=stmt.executeQuery(sql);
+					while(rs.next())
+					{
+						String p=rs.getString("empcode");
+						textArea_1.setText(p);
+					}
+					con.close();
+				}catch(Exception e) {System.out.print(e);}
+			}
+		});
+		btnLoad.setBounds(650, 483, 97, 35);
+		contentPane.add(btnLoad);
+		
+		JLabel lblView = new JLabel("VIEW"+"("+p+")");
+		lblView.setFont(new Font("Times New Roman", Font.BOLD, 23));
+		lblView.setBounds(292, 35, 229, 27);
+		contentPane.add(lblView);
+	}
+
+	public View() {
+		// TODO Auto-generated constructor stub
+	}
+}

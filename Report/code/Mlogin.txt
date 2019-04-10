@@ -1,0 +1,88 @@
+package mysql;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.SystemColor;
+
+public class Mlogin extends JFrame {
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Mlogin frame = new Mlogin();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Mlogin() {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(500, 200, 785, 590);
+		getContentPane().setBackground(new Color(205, 133, 63));
+		getContentPane().setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("ALLOCATOR");
+		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 28));
+		lblNewLabel.setBounds(273, 40, 237, 50);
+		getContentPane().add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("LOGIN MODE");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel_1.setBounds(62, 216, 120, 50);
+		getContentPane().add(lblNewLabel_1);
+		
+		JButton btnNewButton = new JButton("MANAGER");
+		btnNewButton.setBackground(SystemColor.activeCaptionBorder);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Manlog s=new Manlog();
+				s.setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(204, 177, 121, 50);
+		getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("EMPLOYEE");
+		btnNewButton_1.setBackground(SystemColor.activeCaptionBorder);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Login s=new Login();
+				s.setVisible(true);
+			}
+		});
+		btnNewButton_1.setBounds(204, 254, 120, 50);
+		getContentPane().add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("ABOUT");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				About s=new About();
+				s.setVisible(true);
+			}
+		});
+		btnNewButton_2.setBackground(SystemColor.activeCaptionBorder);
+		btnNewButton_2.setBounds(445, 201, 97, 50);
+		getContentPane().add(btnNewButton_2);
+	}
+}

@@ -1,0 +1,138 @@
+package mysql;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+
+public class manager extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					manager frame = new manager();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public manager() {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 708, 455);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(205, 133, 63));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblPbala = new JLabel("P.Bala");
+		lblPbala.setBounds(110, 126, 56, 16);
+		contentPane.add(lblPbala);
+		
+		JButton btnView = new JButton("VIEW");
+		btnView.setBackground(SystemColor.activeCaptionBorder);
+		btnView.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String st="Bala";
+				View s=new View(st);
+				s.setVisible(true);
+			}
+		});
+		btnView.setBounds(313, 122, 97, 25);
+		contentPane.add(btnView);
+		
+		JLabel lblSaemAhmer = new JLabel("Saem Ahmer");
+		lblSaemAhmer.setBounds(110, 190, 87, 16);
+		contentPane.add(lblSaemAhmer);
+		
+		JButton btnView_1 = new JButton("VIEW");
+		btnView_1.setBackground(SystemColor.activeCaptionBorder);
+		btnView_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String st="Saem";
+				View s=new View(st);
+				s.setVisible(true);
+			}
+		});
+		btnView_1.setBounds(313, 186, 97, 25);
+		contentPane.add(btnView_1);
+		
+		JLabel lblNewLabel = new JLabel("Rahul Subhagan");
+		lblNewLabel.setBounds(110, 251, 97, 16);
+		contentPane.add(lblNewLabel);
+		
+		JButton btnView_2 = new JButton("VIEW");
+		btnView_2.setBackground(SystemColor.activeCaptionBorder);
+		btnView_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String st="Rahul";
+				View s=new View(st);
+				s.setVisible(true);
+			}
+		});
+		btnView_2.setBounds(313, 247, 97, 25);
+		contentPane.add(btnView_2);
+		
+		JLabel lblManagerPortal = new JLabel("MANAGER PORTAL");
+		lblManagerPortal.setFont(new Font("Times New Roman", Font.BOLD, 22));
+		lblManagerPortal.setBounds(241, 13, 218, 96);
+		contentPane.add(lblManagerPortal);
+		
+		JButton btnAssign = new JButton("ASSIGN");
+		btnAssign.setBackground(SystemColor.activeCaptionBorder);
+		btnAssign.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String st="Bala";
+				Assign s=new Assign(st);
+				s.setVisible(true);
+			}
+		});
+		btnAssign.setBounds(450, 122, 97, 25);
+		contentPane.add(btnAssign);
+		
+		JButton button = new JButton("ASSIGN");
+		button.setBackground(SystemColor.activeCaptionBorder);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String st="Saem";
+				Assign s=new Assign(st);
+				s.setVisible(true);
+			}
+		});
+		button.setBounds(450, 186, 97, 25);
+		contentPane.add(button);
+		
+		JButton button_1 = new JButton("ASSIGN");
+		button_1.setBackground(SystemColor.activeCaptionBorder);
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String st="Rahul";
+				Assign s=new Assign(st);
+				s.setVisible(true);
+			}
+		});
+		button_1.setBounds(450, 247, 97, 25);
+		contentPane.add(button_1);
+	}
+}

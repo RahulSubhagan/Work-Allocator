@@ -1,0 +1,114 @@
+package mysql;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.awt.Color;
+import java.awt.SystemColor;
+
+public class Manlog extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField user;
+	private JPasswordField pass;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Manlog frame = new Manlog();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Manlog() {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 568,550);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(205, 133, 63));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("ALLOCATOR");
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 26));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(168, 0, 210, 70);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Manager Portal");
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		lblNewLabel_1.setBounds(213, 41, 158, 54);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblUsername = new JLabel("Username");
+		lblUsername.setBounds(41, 117, 109, 41);
+		contentPane.add(lblUsername);
+		
+		user = new JTextField();
+		user.setBounds(28, 147, 306, 35);
+		contentPane.add(user);
+		user.setColumns(10);
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(41, 201, 82, 16);
+		contentPane.add(lblPassword);
+		
+		pass = new JPasswordField();
+		pass.setBounds(28, 219, 306, 35);
+		contentPane.add(pass);
+		
+		JButton btnLogin = new JButton("Login");
+		btnLogin.setBackground(SystemColor.activeCaptionBorder);
+		btnLogin.setBounds(28, 280, 97, 35);
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/data1","root","");
+					Statement stmt=con.createStatement();
+					String sql="Select * from table2 where username='"+user.getText()+"' and password='"+pass.getText().toString()+"'";
+					ResultSet rs=stmt.executeQuery(sql);
+					if(rs.next())
+					{
+						JOptionPane.showMessageDialog(null, "Login Succesful");
+					manager s=new manager();
+					s.setVisible(true);
+					}
+					else
+						JOptionPane.showMessageDialog(null,"Incorrect Username or Password...");
+					con.close();
+				}catch(Exception e) {System.out.print(e);}
+			}
+		});
+		contentPane.add(btnLogin);
+	}
+
+}

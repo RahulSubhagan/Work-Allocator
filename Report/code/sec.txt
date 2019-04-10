@@ -1,0 +1,215 @@
+package mysql;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JScrollBar;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+
+public class sec extends JFrame {
+
+	private JPanel contentPane;
+	private JTextArea textArea;
+	private JScrollPane scrollPane_1;
+	private JTextArea textArea_1;
+	private JButton btnLoad;
+	private JButton button;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					sec frame = new sec();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+
+	/**
+	 * Create the frame.
+	 */
+	public sec(String st) {
+		int a;
+		String o;
+		
+		if(st.equals("Saem"))
+			a=1;
+		else if(st.equals("Bala"))
+			a=2;
+		else
+			a=3;
+		
+		if(a==1)
+			o="1";
+		else if(a==2)
+			o="2";
+		else
+			o="3";
+
+			
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 809, 562);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(205, 133, 63));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblProjectArea = new JLabel("PROJECT AREA"+"("+st+")");
+		lblProjectArea.setBounds(100, 13, 577, 42);
+		lblProjectArea.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblProjectArea.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblProjectArea);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(29, 53, 631, 91);
+		contentPane.add(scrollPane);
+		
+		textArea = new JTextArea();
+		textArea.setBackground(Color.WHITE);
+		textArea.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		scrollPane.setViewportView(textArea);
+		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(29, 159, 736, 298);
+		contentPane.add(scrollPane_1);
+		
+		textArea_1 = new JTextArea();
+		textArea_1.setBackground(Color.WHITE);
+		textArea_1.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		scrollPane_1.setViewportView(textArea_1);
+		
+		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.setBackground(SystemColor.activeCaptionBorder);
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/data1","root","");
+					Statement stmt=con.createStatement();
+					String k=textArea_1.getText();
+					stmt.executeUpdate("insert into scode (empcode,temp) values('"+k+"','"+o+"')" );
+					con.close();
+					
+				}catch(Exception e) {System.out.print(e);}
+			}
+				
+				
+		});
+		btnSubmit.setBounds(668, 477, 97, 25);
+		contentPane.add(btnSubmit);
+		
+		JButton btnClearAll = new JButton("Clear Submissions");
+		btnClearAll.setBackground(SystemColor.activeCaptionBorder);
+		btnClearAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/data1","root","");
+					Statement stmt=con.createStatement();
+					String sql3;
+					if(a==1)
+						sql3="DELETE FROM scode WHERE temp=1";
+					else if(a==2)
+						sql3="DELETE FROM scode WHERE temp=2";
+					else
+						sql3="DELETE FROM scode WHERE temp=3";
+					stmt.executeUpdate(sql3);
+					con.close();
+				}catch(Exception e) {System.out.print(e);}
+				
+				
+			}
+		});
+		btnClearAll.setBounds(29, 477, 154, 25);
+		contentPane.add(btnClearAll);
+		
+		btnLoad = new JButton("Load");
+		btnLoad.setBackground(SystemColor.activeCaptionBorder);
+		btnLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/data1","root","");
+					Statement stmt=con.createStatement();
+					String sql;
+					if(a==1)
+				    sql="Select empcode from scode where temp=1";
+					else if(a==2)
+					sql="Select empcode from scode where temp=2";
+					else
+					sql="Select empcode from scode where temp=3";
+					ResultSet rs=stmt.executeQuery(sql);
+					while(rs.next())
+					{
+						String p=rs.getString("empcode");
+						textArea_1.setText(p);
+					}
+					con.close();
+				}catch(Exception e) {System.out.print(e);}
+				
+			}
+		});
+		btnLoad.setBounds(195, 477, 97, 25);
+		contentPane.add(btnLoad);
+		
+		button = new JButton("Load");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/data1","root","");
+					Statement stmt=con.createStatement();
+					String sql2;
+					if(a==1)
+				    sql2="Select problem from massign where temp=1";
+					else if(a==2)
+				    sql2="Select problem from massign where temp=2";
+					else
+				    sql2="Select problem from massign where temp=3";
+					ResultSet rs2=stmt.executeQuery(sql2);
+					while(rs2.next())
+					{
+						String p2=rs2.getString("problem");
+						textArea.setText(p2);
+					}
+					con.close();
+				}catch(Exception e) {System.out.print(e);}
+			}
+			
+		});
+		button.setBackground(SystemColor.activeCaptionBorder);
+		button.setBounds(668, 53, 97, 91);
+		contentPane.add(button);
+	}
+
+
+	public sec() {
+		// TODO Auto-generated constructor stub
+	}
+}
